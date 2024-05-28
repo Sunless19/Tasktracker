@@ -1,0 +1,10 @@
+.task-columns {
+    display: flex;
+    flex-direction: row;
+}
+  
+  .task-column {
+    flex: 1;
+    margin: 10px;
+  }
+  
