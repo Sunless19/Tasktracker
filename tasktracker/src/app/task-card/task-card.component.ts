@@ -16,7 +16,6 @@ import { MatDialog } from '@angular/material/dialog';
 export class TaskCardComponent {
   @Input() task: Task;
   @Output() deleteTaskEvent = new EventEmitter<Task>();
-TaskListComponent: any;
 
   constructor(private dialog: MatDialog, private taskService: TaskService) {}
 
@@ -35,15 +34,15 @@ TaskListComponent: any;
   }
 
   deleteTask(task: Task): void {
-  this.taskService.deleteTask(task.id).subscribe({
-    next: () => {
-      console.log('Task deleted successfully');
-      this.deleteTaskEvent.emit(task);
-    },
-    error: err => {
-      console.error('Error deleting task:', err);
-    }
-  });
-}
+    this.taskService.deleteTask(task.id).subscribe({
+      next: () => {
+        console.log('Task deleted successfully');
+          this.deleteTaskEvent.emit(task);
+      },
+      error: err => {
+        console.error('Error deleting task:', err);
+      }
+    });
+  }
   
 }

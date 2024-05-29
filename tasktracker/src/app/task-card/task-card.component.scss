@@ -1,12 +1,52 @@
-.task-columns {
-    display: flex;
-  }
-  
-  .task-column {
-    flex: 1;
-    margin: 10px;
-  }
-  
-  
-  
-  
+.task-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  position: relative; /* Pentru a poziționa butoanele de acțiune */
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+}
+
+.task-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.task-description {
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.task-assignedTo {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.task-status {
+  font-weight: bold;
+  color: #28a745; /* Verde pentru status "Done" */
+  margin-bottom: 16px;
+}
+
+.task-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.task-actions button {
+  margin-left: 8px;
+}
+
+.task-column {
+  flex: 1;
+  margin: 10px;
+}
