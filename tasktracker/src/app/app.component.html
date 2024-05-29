@@ -1,8 +1,9 @@
-
-<div>
-  <mat-toolbar>
-    <button mat-button routerLink="/add">Add Task</button>
-    <span>My Application</span>
+<div class="container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button routerLink="/add">
+      <mat-icon>add</mat-icon>
+    </button>
+    <span class="title">TaskTracker</span>
   </mat-toolbar>
   <router-outlet></router-outlet>
 </div>

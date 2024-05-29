@@ -1,9 +1,14 @@
-.task-columns {
-    display: flex;
-  }
-  
-  .task-column {
-    flex: 1;
-    margin: 10px;
-  }
-  
+.view-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.view-buttons button {
+  margin: 0 10px;
+}
+
+.task-container {
+  margin: 0 auto;
+  max-width: 800px;
+}
