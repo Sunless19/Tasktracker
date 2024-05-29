@@ -26,7 +26,7 @@ export class AddTaskComponent {
 
   onSubmit() {
     const newTask: Task = {
-      id: this.taskId, // Server will generate the id
+      id: this.taskId,
       title: this.taskName,
       description: this.taskDescription,
       status: this.taskStatus,

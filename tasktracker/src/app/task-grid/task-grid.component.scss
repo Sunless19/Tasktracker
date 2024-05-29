@@ -1,10 +1,124 @@
 .task-columns {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 16px;
+  background-color: #f0f2f5;
 }
-  
-  .task-column {
-    flex: 1;
-    margin: 10px;
+
+.task-column {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.task-column h2 {
+  margin-top: 0;
+color: #333;
+font-size: 1.5rem;
+text-align: center;
+border-bottom: 2px solid #e0e0e0;
+padding-bottom: 8px;
+}
+
+.task-column
+{
+transform: scale(1.02);
+}
+
+.task-card {
+background-color: #fff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 12px;
+margin-bottom: 12px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s ease-in-out;
+}
+
+.task-card
+{
+transform: scale(1.02);
+}
+
+/* Custom styles for the app-task-card component */
+app-task-card {
+display: block;
+}
+
+.task-columns {
+display: flex;
+justify-content: space-between;
+padding: 16px;
+gap: 16px;
+background-color: #f0f2f5;
+}
+
+.task-column {
+flex: 1;
+background-color: #ffffff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 16px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s ease-in-out;
+}
+
+.task-column h2 {
+margin-top: 0;
+color: #333;
+font-size: 1.5rem;
+text-align: center;
+border-bottom: 2px solid #e0e0e0;
+padding-bottom: 8px;
+}
+
+.task-column
+{
+transform: scale(1.02);
+}
+
+.task-card {
+background-color: #fff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 12px;
+margin-bottom: 12px;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+transition: transform 0.2s ease-in-out;
+}
+
+.task-card
+{
+transform: scale(1.02);
+}
+
+/* Custom styles for the app-task-card component */
+app-task-card {
+display: block;
+}
+
+ .task-description,
+  .task-assignedTo,
+  .task-status {
+    margin: 4px 0;
   }
   
+  .task-description {
+    font-style: italic;
+    color: #555;
+  }
+  
+  .task-assignedTo {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .task-status {
+    color: #28a745;
+    font-weight: bold;
+  }

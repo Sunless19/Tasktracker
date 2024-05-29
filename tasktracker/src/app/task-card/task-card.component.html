@@ -1,20 +1,15 @@
-<mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{task?.title}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        {{task?.description}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-icon-button color="warn" (click)="deleteTask(task)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" (click)="editTask(task)">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </mat-card-actions>
+<div class="task-card">
+  <div class="task-name">{{ task.title }}</div>
+  <div class="task-description">{{ task.description }}</div>
+  <div class="task-assignedTo">{{ task.assignedTo }}</div>
+  <div class="task-status">{{ task.status }}</div>
   
-  </mat-card>
+  <div class="task-actions">
+    <button mat-icon-button color="primary" (click)="editTask(task)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteTask(task)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

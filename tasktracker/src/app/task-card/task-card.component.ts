@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task'; // Adjust the path as necessary
 import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { TaskService } from '../service/task.service';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,31 +9,41 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [MatCardModule, MatIcon],
+  imports: [MatCardModule, MatIconModule],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.scss',
+  styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent {
-editTask(arg0: Task) {
-  const dialogRef = this.dialog.open(EditTaskComponent, {
-    data: arg0,
-  });
-
-  dialogRef.afterClosed().subscribe((result) => {
-    console.log('The dialog was closed');
-    this.taskService.editTask(arg0);
-  });
-
-}
-deleteTask(arg0: Task) {
-  this.taskService.deleteTask(arg0.id);
-}
   @Input() task: Task;
+  @Output() deleteTaskEvent = new EventEmitter<Task>();
+TaskListComponent: any;
 
-  constructor
-  (
-    private dialog:MatDialog,
-    private taskService:TaskService,
-  )
-  {}
+  constructor(private dialog: MatDialog, private taskService: TaskService) {}
+
+  editTask(task: Task) {
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      data: task,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.taskService.editTask(result).subscribe(updatedTask => {
+          console.log('Task updated successfully', updatedTask);
+        });
+      }
+    });
+  }
+
+  deleteTask(task: Task): void {
+  this.taskService.deleteTask(task.id).subscribe({
+    next: () => {
+      console.log('Task deleted successfully');
+      this.deleteTaskEvent.emit(task);
+    },
+    error: err => {
+      console.error('Error deleting task:', err);
+    }
+  });
+}
+  
 }
