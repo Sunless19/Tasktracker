@@ -10,39 +10,42 @@ import { TaskService } from '../service/task.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss'],
+  styleUrl: './add-task.component.scss',
   providers: [TaskService]
 })
 export class AddTaskComponent {
-  taskName: string;
-  taskDescription: string;
-  taskStatus: Status = Status.Done;
-  assignedTo: string;
+  taskId: string='';
+  taskName: string = '';
+  taskDescription: string = '';
+  taskStatus: Status = Status.ToDo;
+  assignedTo: string = '';
 
   statusOptions = Object.values(Status);
 
-  onSubmit(): void {
-    const task: Task = {
-      id: '',
+  constructor(private router: Router, private taskService: TaskService) {}
+
+  onSubmit() {
+    const newTask: Task = {
+      id: this.taskId, // Server will generate the id
       title: this.taskName,
       description: this.taskDescription,
       status: this.taskStatus,
       assignedTo: this.assignedTo,
     };
 
-    this.taskService.addTask(task)
-      .subscribe(task => {
-        console.log('Task added successfully:', task);
-        this.router.navigate(['/']);
-      });
+    this.taskService.addTask(newTask)
+      .subscribe(
+        (task) => {
+          console.log('Task added successfully:', task);
+          this.router.navigate(['/']);
+        },
+        (error) => {
+          console.error('Error adding task:', error);
+        }
+      );
   }
 
-  onCancel(): void {
+  onCancel() {
     this.router.navigate(['/']);
   }
-
-  constructor(
-    private router: Router,
-    private taskService: TaskService
-  ) {}
 }

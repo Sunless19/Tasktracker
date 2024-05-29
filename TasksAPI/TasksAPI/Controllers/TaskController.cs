@@ -18,24 +18,17 @@ public class TaskController : ControllerBase
     }
 
     [HttpPost]
-public async Task<IActionResult> CreateTask([FromBody] TaskModel taskModel)
-{
-    if (taskModel == null)
+    public async Task<IActionResult> CreateTask([FromBody] TaskModel taskModel)
     {
-        return BadRequest("Task cannot be null");
-    }
+        if (taskModel == null)
+        {
+            return BadRequest("Task cannot be null");
+        }
 
-    try
-    {
+        // to implement create task 
         await _taskCollectionService.Create(taskModel);
-        return Ok(taskModel);
+        return Ok(taskModel.Id);
     }
-    catch (Exception ex)
-    {
-        // Log the error (here, just returning the exception message for debugging purposes)
-        return BadRequest(ex.Message);
-    }
-}
 
     [HttpGet]
     public async Task<IActionResult> GetTasks()
@@ -45,7 +38,7 @@ public async Task<IActionResult> CreateTask([FromBody] TaskModel taskModel)
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateTask(Guid id, [FromBody] TaskModel taskModel)
+    public async Task<IActionResult> UpdateTask(string id, [FromBody] TaskModel taskModel)
     {
         if (taskModel == null || taskModel.Id != id)
         {
@@ -63,7 +56,7 @@ public async Task<IActionResult> CreateTask([FromBody] TaskModel taskModel)
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTask(Guid id)
+    public async Task<IActionResult> DeleteTask(string id)
     {
         var taskToDelete = await _taskCollectionService.Get(id);
         if (taskToDelete == null)

@@ -22,7 +22,7 @@ export class TaskService {
   }
 
   addTask(newTask: Task): Observable<Task> {
-    return this.httpClient.post<Task>(this.baseUrl, newTask, this.httpOptions);
+    return this.httpClient.post<Task>(this.baseUrl, newTask, { headers: this.httpOptions.headers, responseType: 'text' as 'json' });
   }
 
   editTask(task: Task): Observable<Task> {
