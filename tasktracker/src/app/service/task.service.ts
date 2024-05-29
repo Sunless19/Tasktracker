@@ -29,7 +29,7 @@ export class TaskService {
     return this.httpClient.put<Task>(`${this.baseUrl}/${task.id}`, task, this.httpOptions);
   }
 
-  deleteTask(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`, this.httpOptions);
-  }
+  deleteTask(id: string): Observable<string> {
+    return this.httpClient.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+}
 }

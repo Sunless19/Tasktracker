@@ -61,10 +61,10 @@ public class TaskController : ControllerBase
         var taskToDelete = await _taskCollectionService.Get(id);
         if (taskToDelete == null)
         {
-            return NotFound("Task not found");
+            return NotFound(new { message = "Task not found" });
         }
 
         await _taskCollectionService.Delete(id);
-        return Ok("Task deleted successfully");
+        return Ok(new { message = "Task deleted successfully" });
     }
 }

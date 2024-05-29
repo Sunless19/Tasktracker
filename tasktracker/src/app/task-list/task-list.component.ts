@@ -29,11 +29,17 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(task: Task): void {
-    this.taskService.deleteTask(task.id).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t.id !== task.id);
-      this.filtredTasks = this.filtredTasks.filter(t => t.id !== task.id);
+    this.taskService.deleteTask(task.id).subscribe({
+        next: (response) => {
+            console.log(response); // Pentru a verifica răspunsul
+            this.tasks = this.tasks.filter(t => t.id !== task.id);
+            this.filtredTasks = this.filtredTasks.filter(t => t.id !== task.id);
+        },
+        error: err => {
+            console.error('Eroare la ștergerea task-ului:', err);
+        }
     });
-  }
+}
 
   editTask(task: Task): void {
     const dialogRef = this.dialog.open(EditTaskComponent, {
