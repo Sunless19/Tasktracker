@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from '../models/task';
 import { FilterComponent } from '../filter-component/filter-component.component';
 import { CommonModule } from '@angular/common';
-import { Status } from '../models/Status';
 import { MatIcon } from '@angular/material/icon';
 import { TaskService } from '../service/task.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -13,47 +12,48 @@ import { EditTaskComponent } from '../edit-task/edit-task.component';
   standalone: true,
   imports: [FilterComponent, CommonModule, MatIcon, MatDialogModule],
   templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.scss',
-  providers:[TaskService]
+  styleUrls: ['./task-list.component.scss'],
+  providers: [TaskService]
 })
-
-
 export class TaskListComponent implements OnInit {
-  filtredTasks:Task[];
-  tasks:Task[];
-  
-  ngOnInit(): void {
+  filtredTasks: Task[];
+  tasks: Task[];
 
-    this.taskService.getTasks().subscribe(tasks => this.tasks = tasks);
-    this.taskService.getTasks().subscribe(tasks => this.filtredTasks = tasks);
+  constructor(private taskService: TaskService, private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.taskService.getTasks().subscribe(tasks => {
+      this.tasks = tasks;
+      this.filtredTasks = tasks;
+    });
   }
 
-deleteTask(_t5: Task) {
-  this.taskService.deleteTask(_t5.id);
-}
+  deleteTask(task: Task): void {
+    this.taskService.deleteTask(task.id).subscribe(() => {
+      this.tasks = this.tasks.filter(t => t.id !== task.id);
+      this.filtredTasks = this.filtredTasks.filter(t => t.id !== task.id);
+    });
+  }
 
-editTask(_t5: Task) : void {
-  const dialogRef = this.dialog.open(EditTaskComponent, {
-    data: _t5,
-  });
+  editTask(task: Task): void {
+    const dialogRef = this.dialog.open(EditTaskComponent, {
+      data: task,
+    });
 
-  dialogRef.afterClosed().subscribe((result) => {
-    console.log('The dialog was closed');
-    this.taskService.editTask(_t5);
-  });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.editTask(result).subscribe(updatedTask => {
+          const index = this.tasks.findIndex(t => t.id === updatedTask.id);
+          if (index !== -1) {
+            this.tasks[index] = updatedTask;
+            this.filtredTasks[index] = updatedTask;
+          }
+        });
+      }
+    });
+  }
 
-}
-
-handleStatusSelected(status) {
-  this.filtredTasks = this.tasks.filter((task) => task.status === status);
-}
-  
-
-  constructor
-  (
-    private taskService:TaskService,
-    private dialog: MatDialog,
-
-  )
-  {}
+  handleStatusSelected(status: string): void {
+    this.filtredTasks = this.tasks.filter(task => task.status === status);
+  }
 }

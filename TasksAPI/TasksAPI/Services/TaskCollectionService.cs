@@ -50,14 +50,8 @@ namespace TasksAPI.Services
 
         public async Task<bool> Update(Guid id, TaskModel taskModel)
         {
-            taskModel.Id = id;
-            var result = await _tasks.ReplaceOneAsync(taskModel => taskModel.Id == id, taskModel);
-            if (!result.IsAcknowledged && result.ModifiedCount == 0) {
-                await _tasks.InsertOneAsync(taskModel);
-                return false;
-            }
-            
-            return true;
+            var result = await _tasks.ReplaceOneAsync(t => t.Id == id, taskModel);
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
         public async Task<List<TaskModel>> GetTasksByStatus(string status)

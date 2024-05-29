@@ -10,49 +10,39 @@ import { TaskService } from '../service/task.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.scss',
+  styleUrls: ['./add-task.component.scss'],
   providers: [TaskService]
 })
 export class AddTaskComponent {
-taskName: any;
-taskDescription: any;
-taskStatus: Status.Done;
-assignedTo: any;
+  taskName: string;
+  taskDescription: string;
+  taskStatus: Status = Status.Done;
+  assignedTo: string;
 
-statusOptions = Object.values(Status); // Presupunând că Status este un enum
+  statusOptions = Object.values(Status);
 
+  onSubmit(): void {
+    const task: Task = {
+      id: '',
+      title: this.taskName,
+      description: this.taskDescription,
+      status: this.taskStatus,
+      assignedTo: this.assignedTo,
+    };
 
-onSubmit(){
-
-const task = {
-  
-  name: this.taskName,
-  description: this.taskDescription,
-  status: Status.Done,
-  assignedTo: this.assignedTo,
-}
-
-
-this.taskService.addTask(task)
+    this.taskService.addTask(task)
       .subscribe(task => {
         console.log('Task added successfully:', task);
         this.router.navigate(['/']);
       });
+  }
 
-console.log(this.taskName + this.taskDescription)  
-this.router.navigate(['/']);
-}
+  onCancel(): void {
+    this.router.navigate(['/']);
+  }
 
-onCancel(){
-  this.router.navigate(['/']);
-}
-
-
-constructor
-(
-  private router:Router,
-  private taskService:TaskService,
-)
-{}
-
+  constructor(
+    private router: Router,
+    private taskService: TaskService
+  ) {}
 }

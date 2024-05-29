@@ -1,48 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Status } from '../models/Status';
-import { Task } from '../models/task';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
+import { Task } from '../models/task';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TaskService {
-
   readonly httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
+      'Content-Type': 'application/json',
     })
   };
 
+  baseUrl = "https://localhost:7000/Task";
 
-  baseUrl="https://localhost:7000/Task" 
-  headers: HttpHeaders | { [header: string]: string | string[]; };
-  constructor(private httpClient:HttpClient) 
-    { }
+  constructor(private httpClient: HttpClient) {}
 
-  getTasks() :Observable<Task[]>
-  {
-    return this.httpClient.get<Task[]>(this.baseUrl, this.httpOptions );
+  getTasks(): Observable<Task[]> {
+    return this.httpClient.get<Task[]>(this.baseUrl, this.httpOptions);
   }
 
-  addTask(newTask: any) {
-    
-    
-    
-    return this.httpClient.post<Task>(this.baseUrl, newTask, { headers: this.headers, responseType: 'text' as 'json' });
+  addTask(newTask: Task): Observable<Task> {
+    return this.httpClient.post<Task>(this.baseUrl, newTask, this.httpOptions);
   }
 
-  editTask(task: Task) {
-    return this.httpClient.put<Task>(`${this.baseUrl}/${task.id}`, task);
-  }      
-
-  deleteTask(id:string) : void{
-    let i = this.tasks.findIndex((t) => t.id == id);
-    this.tasks = this.tasks.splice(i, 1)
+  editTask(task: Task): Observable<Task> {
+    return this.httpClient.put<Task>(`${this.baseUrl}/${task.id}`, task, this.httpOptions);
   }
 
-  tasks: Task[];
-
+  deleteTask(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`, this.httpOptions);
+  }
 }
